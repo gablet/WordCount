@@ -6,6 +6,7 @@ using Application.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 
 namespace Application.Controllers
@@ -13,17 +14,25 @@ namespace Application.Controllers
     [Route("/")]
     public class WordCountController : ControllerBase
     {
-        private CounterService _counterService;
-        
-        public WordCountController(CounterService counterService)
+        public CounterService _counterService;
+        private readonly ILogger<WordCountController> _logger;
+
+        public WordCountController(CounterService counterService, ILogger<WordCountController> logger)
         {
             _counterService = counterService;
+            _logger = logger;
         }
 
         [HttpPost("count")]
-        public IActionResult Count([FromBody]string text) 
+        public async Task<IActionResult> Count([FromBody] string text)
         {
-            var result = _counterService.Count(text);
+            if (string.IsNullOrEmpty(text))
+            {
+                _logger.LogInformation("Bad Request: Invalid text input");
+                return BadRequest();
+            }
+
+            var result = await _counterService.Count(text);
             return Ok(result);
         }
     }
