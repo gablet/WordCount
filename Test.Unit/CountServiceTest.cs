@@ -9,10 +9,10 @@ public class CountServiceTest
     {
         //-------SETUP------
         string text = "Dog Cat Rat Dog Monkey Lion Rat";
-        CounterService service = new CounterService();
+        TextAnalyzer analyzer = new TextAnalyzer();
 
         // ---- EXECUTE -----
-        var result = await service.Count(text);
+        var result = await analyzer.CountWordFrequency(text);
 
         //-----VALIDATE-------
 
@@ -25,10 +25,10 @@ public class CountServiceTest
     {
         //-------SETUP------
         string text = "Dog Cat Rat Dog Monkey Lion Rat Mouse Mouse Mouse Fish Bird Sealion Whale Zebra Elephant";
-        CounterService service = new CounterService();
+        TextAnalyzer analyzer = new TextAnalyzer();
 
         // ---- EXECUTE -----
-        var result = await service.Count(text);
+        var result = await analyzer.CountWordFrequency(text);
 
         //-----VALIDATE-------
         Assert.Equal(10, result.Count);

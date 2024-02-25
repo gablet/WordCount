@@ -18,7 +18,7 @@ namespace Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddScoped<CounterService>();
+            services.AddScoped<TextAnalyzer>();
         }
     }
 }

@@ -2,12 +2,11 @@
 namespace Application.Service
 {
 
-    public class CounterService
+    public class TextAnalyzer
     {
-        public async Task<Dictionary<string, int>> Count(string text)
+        public async Task<Dictionary<string, int>> CountWordFrequency(string text)
         {
-            Dictionary<string, int> result = new Dictionary<string, int>();
-
+            var result = new Dictionary<string, int>();
             var substrings = text.Split(' ');
 
             foreach (var substring in substrings)
@@ -21,7 +20,7 @@ namespace Application.Service
                     result.Add(substring, 1);
                 }
             }
-            return result.OrderBy(x => x.Value).Take(10).ToDictionary();
+            return result.OrderByDescending(x => x.Value).Take(10).ToDictionary();
         }
     }
 }
