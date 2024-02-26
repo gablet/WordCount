@@ -7,24 +7,27 @@ namespace Application.Controllers
     public class TextAnalyzerController : ControllerBase
     {
         public TextAnalyzer _textAnalyzer;
-        private readonly ILogger<TextAnalyzerController> _logger;
 
-        public TextAnalyzerController(TextAnalyzer textAnalyzer, ILogger<TextAnalyzerController> logger)
+        public TextAnalyzerController(TextAnalyzer textAnalyzer)
         {
             _textAnalyzer = textAnalyzer;
-            _logger = logger;
         }
 
         [HttpPost("/word/frequency")]
-        public async Task<IActionResult> CountWordFrequency([FromBody] string text)
+        public IActionResult CountWordFrequency([FromBody] string text)
         {
             if (string.IsNullOrEmpty(text))
             {
-                _logger.LogInformation("Bad Request: Invalid text input");
                 return BadRequest();
             }
 
-            var result = await _textAnalyzer.CountWordFrequency(text);
+            var substrings = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (substrings.Length == 0)
+            {
+                return BadRequest();
+            }
+
+            var result = _textAnalyzer.CountWordFrequency(substrings);
             return Ok(result);
         }
     }

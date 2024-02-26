@@ -4,10 +4,10 @@ namespace Application.Service
 
     public class TextAnalyzer
     {
-        public async Task<Dictionary<string, int>> CountWordFrequency(string text)
+        public Dictionary<string, int> CountWordFrequency(string[] substrings)
         {
             var result = new Dictionary<string, int>();
-            var substrings = text.Split(' ');
+
 
             foreach (var substring in substrings)
             {
